@@ -71,11 +71,11 @@ const newGame = function() {
     playersHand.push(draw(deck))
     dealersHand.push(draw(deck))
 
-    setCardImage(dealersHand[0], "dealersHand", false)
-    setCardImage(dealersHand[1], "dealersHand", true)
+    setCardImage(dealersHand[0], handKeys[0], false)
+    setCardImage(dealersHand[1], handKeys[0], true)
 
-    setCardImage(playersHand[0], "playersHand", false)
-    setCardImage(playersHand[1], "playersHand", false)
+    setCardImage(playersHand[0], handKeys[1], false)
+    setCardImage(playersHand[1], handKeys[1], false)
 
     evaluateScore(playersHand)
 }
@@ -132,9 +132,14 @@ const evaluateScore = function(hand) {
 
     if(playerScore > 21) {
         document.getElementById("handValue").textContent = "Your score is: " + playerScore + ". Bust..."
-        document.getElementById("hitButton").disabled = true
+
+        for(let i = 0; i < buttonKeys.length; i++) {
+            document.getElementById(buttonKeys[i]).disabled = true
+        }
+
     } else if(playerScore === 21 && hand.length === 2) {
         // Pay out 1.5x the bet
+        // If dealer has black jack also it's a stand off and player gets his bet back
         document.getElementById("handValue").textContent = "Your score is: " + playerScore + ". BLACK JACK!!!!!"
     } else if(playerScore === 21) {
         document.getElementById("handValue").textContent = "Your score is: " + playerScore + ". You win? You stand?"
@@ -153,7 +158,7 @@ const hit = function() {
 
     playersHand.push(newCard)
 
-    setCardImage(newCard, "playersHand", false)
+    setCardImage(newCard, handKeys[1], false)
 
     evaluateScore(playersHand)
 
@@ -161,6 +166,10 @@ const hit = function() {
 }
 
 const stand = function() {
+
+    let element = document.getElementsByClassName("faceDownCard")
+    element[0].remove()
+    setCardImage(dealersHand[1], handKeys[0], false)
     // Dealer plays until minimum 17 or bust
     // Then evaluates which bets to collect and what the pay outs are
 }
@@ -178,6 +187,9 @@ const double = function() {
 }
 
 // Game logic
+
+const buttonKeys = ["hitButton", "standButton", "splitButton", "doubleButton"]
+const handKeys = ["dealersHand", "playersHand"]
 
 let deck
 
