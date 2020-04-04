@@ -3,16 +3,24 @@
 body, html {
     background-color: darkgreen;
     color: white;
+    font-family: baloo2;
 }
 h1 {
     font-family: blackJackFont;
-    text-align: center;
     font-size: 3em;
+}
+#content {
+    text-align: center;
+}
+#centeredContent {
+    display: inline-block;
+
 }
 /* Button styles */
 
 #buttons {
     display: flex;
+    justify-content: center;
 }
 
 /* Cards general */
@@ -42,4 +50,8 @@ h1 {
 @font-face {
     font-family: "blackJackFont";
     src: url("fonts/blackjack.otf");
+}
+@font-face {
+    font-family: "baloo2";
+    src: url("fonts/baloo2-regular.ttf");
 }
